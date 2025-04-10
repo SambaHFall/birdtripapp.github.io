@@ -50,7 +50,6 @@ class Guessable {
 
 		for(let i = 0; i < this.entries.length; i++){
 			this.entries[i] = document.createElement("input")
-			console.log(this.expectedValues[i])
 			this.entries[i].setAttribute("type", "text")
 			this.entries[i].setAttribute("position", "relative")
 			this.entries[i].setAttribute("top", element.offsetTop)

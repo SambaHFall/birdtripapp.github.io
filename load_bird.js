@@ -1,8 +1,7 @@
-const fileInput = document.getElementById('csv');
 let birds = null ;
 
 function parse_csv(content) {
-  var csv_rows = content.split("\r\n") ;
+  var csv_rows = content.split("\n") ;
   for(let i = 0; i < csv_rows.length ; i++){
     csv_rows[i] = csv_rows[i].split(",")
   }
@@ -33,7 +32,7 @@ function parse_csv(content) {
   return maps
 }
 
-function readFile(event){
+function readFile(file){
   const reader = new FileReader()
   reader.onload = function(event){
     raw_content = reader.result
@@ -41,11 +40,26 @@ function readFile(event){
     birds = parsed_content
     load_random_bird()
   }
-  const file = fileInput.files[0]
-  console.log(file)
   reader.readAsText(file, 'UTF-8')
-
 }
+
+
+var getFile = function (url, name) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url);
+        xhr.responseType = "blob";
+        xhr.addEventListener('load', function() {
+            blob = xhr.response
+            blob.lastModifiedDate = new Date();
+            blob.name = name;
+            readFile(blob)
+        });
+        xhr.send();
+};
+
+getFile('https://raw.githubusercontent.com/SambaHFall/SambaHFall.github.io/refs/heads/main/data/cleanbirdtable.csv', "birdtable.csv"); 
+
+
 
 function getRandomInt() {
   if (birds === null){
@@ -57,7 +71,7 @@ function getRandomInt() {
 function load_random_bird(){
   let randint = getRandomInt()
   if (!(randint === null)){
-    randmap = birds[randint]
+    let randmap = birds[randint]
     document.getElementById("vernacular-name").innerHTML = randmap.get("vernacular")
     document.getElementById("scientific-name").innerHTML = randmap.get("scientific")
     document.getElementById("size-value").innerHTML = randmap.get("size")
@@ -103,33 +117,4 @@ function load_random_bird(){
   }
 }
 
-fileInput.addEventListener('change', readFile)
 document.getElementById('load-bird-button').addEventListener('click', load_random_bird)
-
-
-var getFileBlob = function (url, cb) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", url);
-        xhr.responseType = "blob";
-        xhr.addEventListener('load', function() {
-            cb(xhr.response);
-        });
-        xhr.send();
-};
-
-var blobToFile = function (blob, name) {
-        blob.lastModifiedDate = new Date();
-        blob.name = name;
-        return blob;
-};
-
-var getFileObject = function(filePathOrUrl, cb) {
-       getFileBlob(filePathOrUrl, function (blob) {
-          cb(blobToFile(blob, 'test.jpg'));
-       });
-};
-
-var exf = getFileObject('./data/cleanbirdtable.csv', function (fileObject) {
-     console.log(fileObject);
-}); 
-

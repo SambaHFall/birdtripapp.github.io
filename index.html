@@ -1,11 +1,82 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>My app</title>
+	<title>Guess the Bird</title>
+	<link rel="icon" type="image/jpg" href=".\imgs\icon.jpg"/>
+	<link href="index.css" rel="stylesheet">
 </head>
 <body>
-<h1> Test </h1>
+<main>
+
+<button id="load-bird-button">
+	Nouvel oiseau
+</button>
+
+<input id="csv" type="file" accept=".csv">
+
+<div class="three-columns">
+	<div class="first-column"> 
+		<div class="names">
+			<div id="vernacular-container">
+				<p> Nom : </p> 
+				<h1 class="hideable guessable master" id="vernacular-name"></h1>
+			</div>
+			<div id="scientific-container">
+				<p> Nom scientifique : </p>
+				<h2 class="hideable guessable" id="scientific-name"></h2>
+			</div>
+		</div>
+		<div class="info-box">
+			<ul class="info-size">
+				<li> <p> Taille : <span id="size-value"></span> </p> </li>
+				<li> <p> Envergure : <span id="wingspan-value"></span> </p> </li>
+				<li> <p> Ordre : <span class="hideable guessable" id="order-value"></span> </p> </li>
+				<li> <p> Famille : <span class="hideable guessable" id="family-value"></span> </p> </li>
+			</ul>
+			<div class="map">
+				<img id="map-img">
+			</div>	
+		</div>
+	</div>
+	<div class="second-column">
+		<div class="bird-img-container">
+			<img id="bird-img">
+		</div>
+		<div class="record">
+			<button class="record-button" onclick="audioButtonFunction()" width="30px" height="30px">
+				<canvas id="record-button-canvas" width="30px" height="30px">
+				</canvas>
+			</button>
+			<audio id="bird-audio" ontimeupdate="updateAudioBar()" preload="metadata">
+			</audio>
+			<div class="progress-slider-container">
+	  			<progress class="progress-slider" value="0" max="100"></progress>
+	  			<span class="progress-slider-times">
+	  				<small style="float: left; position: relative; " id="current-time"></small>
+    				<small style="float: right; position: relative;" id="end-time"></small>
+    			</span>
+    		</div>
+		</div> 
+	</div>
+	<div class="third-column">
+	<h3>Meilleures prédictions </h3>
+	<p>
+	Nom : <span class="pred" id="vernacular-pred"> </span> <br>
+	Nom scientifique : <span class="pred" id="scientific-pred"> </span> <br>
+	Ordre : <span class="pred" id="order-pred"> </span> <br>
+	Famille : <span class="pred" id="family-pred"> </span> <br>
+	</p>
+	<button id="reveal-button">
+		Reponse
+	</button>
+	</div>
+</div>
+<script type="text/javascript" src="mask_guessables.js"> </script>
+<script type="text/javascript" src="image_color.js"> </script>
+<script type="text/javascript" src="audio.js"> </script>
+<script type="text/javascript" src="load_bird.js"> </script>
+</main>
 </body>
 </html>
